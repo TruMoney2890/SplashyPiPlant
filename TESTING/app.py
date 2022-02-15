@@ -10,7 +10,7 @@ def my_form():
 def my_form_post():
     input_nopol = request.form['text_box']
     if request.method == 'POST':
-       with open('nopol.txt', 'a') as f:
+       with open('nopol.txt', 'a+') as f:
             f.write(str(input_nopol))
     return render_template('index.html', nopol=input_nopol)
 
