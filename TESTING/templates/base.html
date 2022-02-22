@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %} - FlaskApp</title>
+    <title>{% block title %} {% endblock %} - Splashy PiPlant</title>
     <style>
         .message {
             padding: 10px;
@@ -10,7 +10,7 @@
             background-color: #f3f3f3
         }
         nav a {
-            color: #d64161;
+            color: #228C22;
             font-size: 3em;
             margin-left: 50px;
             text-decoration: none;
@@ -27,9 +27,17 @@
 </head>
 <body>
     <nav>
-        <a href="{{ url_for('index') }}">FlaskApp</a>
-        <a href="{{ url_for('create') }}">Create</a>
+        <a href="{{ url_for('index') }}">Splashy PiPlant</a>
+        <a href="{{ url_for('create') }}">Add Plant</a>
         <a href="#">About</a>
+        <!DOCTYPE html> <html> 
+            <head> 
+                <title>HTML img Tag</title> 
+            </head> 
+            <body> 
+                <img src="https://www.python.org/static/community_logos/python-logo-master-v3-TM.png" alt="Simply Easy Learning" width="200" height="80"> 
+            </body> 
+            </html>
     </nav>
     <hr>
     <div class="content">

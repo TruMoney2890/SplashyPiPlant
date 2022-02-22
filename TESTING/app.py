@@ -6,10 +6,10 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '15d95fea91abf12688dde77bf2ce14f98bd78533b71217e4'
 
-messages = [{'title': 'Message One',
-             'content': 'Message One Content'},
-            {'title': 'Message Two',
-             'content': 'Message Two Content'}
+messages = [{'title': 'Spring Cactus',
+             'content': 'Watered 3 times a day'},
+            {'title': 'Arabian Bonzai Tree',
+             'content': 'Watered 2 times a day'}
             ]
 
 @app.route('/')
