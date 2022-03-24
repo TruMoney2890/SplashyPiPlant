@@ -1,1 +1,4 @@
-Title:appleContent:banana
+Title:test
+ Water Amount:25
+ Water Frequency:1
+ Notes:e

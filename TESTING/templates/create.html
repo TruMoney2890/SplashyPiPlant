@@ -2,23 +2,31 @@
 
 {% block content %}
     <h1>{% block title %} Add a New Plant {% endblock %}</h1>
-    <form method="post">
-        <label for="title">Plant Name</label>
-        <br>
+
+    <!-- Numerical input for plant watering frequency -->
+    <form action="{{ url_for('create') }}" method="POST">
+        <label for="title">Plant Name:</label>
         <input type="text" name="title"
-               placeholder="Message title"
-               value="{{ request.form['title'] }}"></input>
+            placeholder="Message title"
+            value="{{ request.form['title'] }}"></input>        
+            <br>
+
+        <label for="water_frequency">Water Frequency (every ___ amount of hours):</label>
+        <input type="number" name="water_frequency" id="water_frequency">
         <br>
 
-        <label for="content">Plant Description</label>
+        <label for="water_amount">Water Amount (in milliliters):</label>
+        <input type="number" name="water_amount" id="water_amount" min="0" max="250" step="25"> 
         <br>
-        <textarea name="content"
-                  placeholder="Message content"
-                  rows="15"
-                  cols="60"
-                  >{{ request.form['content'] }}</textarea>
+
+        <label for="water_notes">Water Notes:</label>
+        <input type="text" name="water_notes" id="water_notes">
         <br>
-        <button type="submit">Add Plant</button>
+
+        <input type="submit" value="Add Plant">
+        <br>
+        <br>
     </form>
+    
 {% endblock %}
 
