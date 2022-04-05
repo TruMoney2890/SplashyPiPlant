@@ -1,4 +1,4 @@
-Title:test
- Water Amount:25
- Water Frequency:1
- Notes:e
+Title: banana
+ Water Amount: 0
+ Water Frequency: 23
+ Notes: 23

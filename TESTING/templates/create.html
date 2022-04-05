@@ -7,21 +7,76 @@
     <form action="{{ url_for('create') }}" method="POST">
         <label for="title">Plant Name:</label>
         <input type="text" name="title"
-            placeholder="Message title"
+            placeholder="Plant name"
             value="{{ request.form['title'] }}"></input>        
-            <br>
+            <br><br>
 
-        <label for="water_frequency">Water Frequency (every ___ amount of hours):</label>
-        <input type="number" name="water_frequency" id="water_frequency">
-        <br>
+        <label for="water_frequency">Water Frequency:</label>
+        <input type="number" name="water_frequency" id="water_frequency"
+            placeholder="Frequency (hours)"> </input>
+            <br><br>
 
+        Plant Location: Please select where your plant is located
+        <br><br>
+        
+        <input type="radio" id="plant1" name="plantLocation" value="1"> 1 
+        ---------------- 
+        <input type="radio" id="plant2" name="plantLocation" value="2"> 2
+        <pre>
+            |
+            |      
+            |       
+            |            
+            |           
+            | 
+        </pre>
+        <input type="radio" id="plant3" name="plantLocation" value="3"> 3 
+        ---------------- 
+        <input type="radio" id="plant4" name="plantLocation" value="4"> 4
+        <pre>
+            |
+            |      
+            |       
+            |            
+            |           
+            | 
+        </pre>
+        <input type="radio" id="plant5" name="plantLocation" value="5"> 5 
+        ---------------- 
+        <input type="radio" id="plant6" name="plantLocation" value="6"> 6
+        <pre>
+            |
+            |      
+            |       
+            |            
+            |           
+            | 
+        </pre>
+        <input type="radio" id="plant7" name="plantLocation" value="7"> 7 
+        ---------------- 
+        <input type="radio" id="plant8" name="plantLocation" value="8"> 8
+        <pre>
+            |
+            |      
+            |       
+            |            
+            |           
+            | 
+        </pre>
+        <input type="radio" id="plant9" name="plantLocation" value="9"> 9 
+        ---------------- 
+        <input type="radio" id="plant10" name="plantLocation" value="10"> 10 
+        <br><br>
+    
         <label for="water_amount">Water Amount (in milliliters):</label>
-        <input type="number" name="water_amount" id="water_amount" min="0" max="250" step="25"> 
-        <br>
+        <input type="number" name="water_amount" id="water_amount" min="0" max="250" step="25"
+            placeholder="Water Amount (mL)"> </input> 
+        <br><br>
 
         <label for="water_notes">Water Notes:</label>
-        <input type="text" name="water_notes" id="water_notes">
-        <br>
+        <input type="text" name="water_notes" id="water_notes"
+            placeholder="Notes"> </input>
+        <br><br>
 
         <input type="submit" value="Add Plant">
         <br>
