@@ -87,15 +87,11 @@ def create():
             messages.append({'title': title, 'content': plantInfo})
 
             # Need to figure out the source of each piece of text, and put it in the output file
-            with open('OUTPUT.txt', 'w') as f:
-                f.write(str(f'Title: {title}\n'))
-                f.write(str(f' Water Amount: {water_amount}\n'))
-                f.write(str(f' Plant Location: {plantLocation}\n'))
-                #f.write(str(f' Water Frequency: {water_frequency}\n'))
-                f.write(str(f' Notes: {water_notes}\n'))
+            with open('OUTPUT.txt', 'a') as f:
+                f.write(str(f'{title}, {water_amount}, {plantLocation} \n'))
             # Close the file
             f.close()
-            
+
             flash(f'Added {title}: {plantInfo}')
             #flash(water_amount)
 

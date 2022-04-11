@@ -1,4 +1,3 @@
-Title: banana
- Water Amount: 75
- Plant Location: 5
- Notes: its a banana
+d, 25, 2 
+d, 44, 2 
+asdf, 66, 1 
