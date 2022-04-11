@@ -1,4 +1,4 @@
 Title: banana
- Water Amount: 0
- Water Frequency: 23
- Notes: 23
+ Water Amount: 75
+ Plant Location: 5
+ Notes: its a banana

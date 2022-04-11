@@ -1,7 +1,5 @@
-## ADD PLANT LOCATION, AS IN WHAT LINE IT IS AT
 ## ADD REMOVE FUNCTION 
 ## CHECKBOXES FOR mL AMOUNTS
-## ADD ABILITY TO SELECT WHICH LINE THE PLANT IS AT AND DRAW A DIAGRAM 
 
 import json
 from flask import Flask, render_template, request, url_for, flash, redirect
@@ -59,8 +57,8 @@ def create():
     if request.method == 'POST':
         title = request.form['title']
         # content = request.form['content']
+        plantLocation = request.form['plantLocation']
         water_amount = request.form['water_amount']
-        water_frequency = request.form['water_frequency']
         water_notes = request.form['water_notes']
 
         # Need to figure out the source of each piece of text, and put it in the output file
@@ -78,7 +76,7 @@ def create():
         # getting input with name = lname in HTML form 
         contentForm = request.form.get("content") 
 
-        plantInfo = f'WATERED: {water_amount} mL EVERY: {water_frequency} hours' + '\n' + 'NOTES: ' + '\n' + water_notes
+        plantInfo = f'WATERED: {water_amount} mL EVERY: 3 Hours' + '\n' + 'LOCATION: ' + plantLocation + '\n' + 'NOTES: ' + '\n' + water_notes
 
 
         if not title:
@@ -92,9 +90,12 @@ def create():
             with open('OUTPUT.txt', 'w') as f:
                 f.write(str(f'Title: {title}\n'))
                 f.write(str(f' Water Amount: {water_amount}\n'))
-                f.write(str(f' Water Frequency: {water_frequency}\n'))
+                f.write(str(f' Plant Location: {plantLocation}\n'))
+                #f.write(str(f' Water Frequency: {water_frequency}\n'))
                 f.write(str(f' Notes: {water_notes}\n'))
-
+            # Close the file
+            f.close()
+            
             flash(f'Added {title}: {plantInfo}')
             #flash(water_amount)
 
