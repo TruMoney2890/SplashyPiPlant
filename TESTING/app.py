@@ -1,5 +1,4 @@
 ## ADD REMOVE FUNCTION 
-## CHECKBOXES FOR mL AMOUNTS
 
 import json
 from flask import Flask, render_template, request, url_for, flash, redirect
@@ -15,41 +14,35 @@ messages = [{'title': 'Spring Cactus',
             'content': 'WATERED: 2 times a day'}
             ]
 
+def read_data():
+    with open('OUTPUT.txt', 'r') as f:
+        Lines = f.readlines()
+        for line in Lines:
+            # split the file by the commas
+            line = line.split(',')
+            title = line[0]
+            amount = line[1]
+            location = line[2]
+            tempPlantInfo = f"WATERED: {amount} mL EVERY: 3 Hours LOCATION: {location}"
+            tempMessage = {'title': title, 'content': tempPlantInfo}
+            messages.append(tempMessage)
+
+    f.close()
+    return 0
+
+
+
+
 
 @app.route('/')
 def index():
+    
     return render_template('index.html', messages=messages)
-
-
-@app.route('/', methods=['POST'])
-def my_form_post():
-    input_nopol = request.form['title']
-    #input_nopol2 = request.form['content']
-    if request.method == 'POST':
-        with open('OUTPUT.txt', 'w') as f:
-            f.write(str(input_nopol))
-    return render_template('create.html', nopol=input_nopol)
 
 
 def main():
     return render_template('index.html')
 
-plantArt = {
-    "         __/)\ " + "\n" + 
-    "        .-(__(=:" + "\n" +
-    "        |    \)" + "\n" +
-    "  (\__  | " + "\n" +
-    " :=)__)-|  __/)" + "\n" +
-    "  (/    |-(__(=:" + "\n" + 
-    "______  |  _ \)" + "\n" +
-    "/     \ | / \ " + "\n" +
-    "    ___\|/___\ " + "\n" +
-    "   [         ]\ " + "\n" +
-    "    \       /  " + "\n" + 
-    "     \     / " + "\n" + 
-    "      \___/ "
-    
-}
 
 @app.route('/create/', methods=('GET', 'POST'))
 def create():
@@ -59,27 +52,28 @@ def create():
         plantLocation = request.form['plantLocation']
         water_amount = request.form['water_amount']
         water_notes = request.form['water_notes']
-
-        # url = 'http://127.0.0.1:5000/'
-        # urllib.urlretrieve(url, fielname='webpage.html')
-
+        
         plantInfo = f'WATERED: {water_amount} mL EVERY: 3 Hours' + '\n' + 'LOCATION: ' + plantLocation + '\n' + 'NOTES: ' + '\n' + water_notes
 
+        plantCSV = f'{title}, {water_amount}, {plantLocation} \n'
+        
         if not title:
             flash('Title is required!')
         elif not water_amount:
             flash('Water amount is required!')
+        elif not plantLocation:
+            flash('Plant location is required!')
         else:
             messages.append({'title': title, 'content': plantInfo})
 
-            # Need to figure out the source of each piece of text, and put it in the output file
             with open('OUTPUT.txt', 'a') as f:
-                f.write(str(f'{title}, {water_amount}, {plantLocation} \n'))
+                # Check if there is an entry at the plant location
+
+                f.write(str(plantCSV))
             # Close the file
             f.close()
 
             flash(f'Added {title}: {plantInfo}')
-            #flash(water_amount)
 
             return redirect(url_for('index'))
     return render_template('create.html')  
