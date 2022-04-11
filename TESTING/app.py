@@ -1,4 +1,7 @@
+## ADD ABILITY TO OVERWRITE A LINE IF THE PLANT LOCATION IS DUPLICATE
 ## ADD REMOVE FUNCTION 
+## ADD WARNING IF NOT 22ML INCREMENT
+## TWEAK READ DATA FUNCTION TO ONLY RENDER ONCE AND NOT EVERYTIME
 
 import json
 from flask import Flask, render_template, request, url_for, flash, redirect
@@ -15,7 +18,7 @@ messages = [{'title': 'Spring Cactus',
             ]
 
 def read_data():
-    with open('OUTPUT.txt', 'r') as f:
+    with open('OUTPUT.csv', 'r') as f:
         Lines = f.readlines()
         for line in Lines:
             # split the file by the commas
@@ -29,10 +32,6 @@ def read_data():
 
     f.close()
     return 0
-
-
-
-
 
 @app.route('/')
 def index():
@@ -66,8 +65,18 @@ def create():
         else:
             messages.append({'title': title, 'content': plantInfo})
 
-            with open('OUTPUT.txt', 'a') as f:
-                # Check if there is an entry at the plant location
+            with open('OUTPUT.csv', 'a') as f:
+                # Lines = f.readlines()
+                # for line in Lines:
+                #     # split the file by the commas
+                #     line = line.split(',')
+                #     title = line[0]
+                #     amount = line[1]
+                #     location = line[2]
+                #     if location == plantLocation:
+                #         # overwrite that line
+                #         f.write(plantCSV)
+                #         f.close()
 
                 f.write(str(plantCSV))
             # Close the file
