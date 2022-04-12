@@ -39,10 +39,8 @@ def index():
     
     return render_template('index.html', messages=messages)
 
-
 def main():
     return render_template('index.html')
-
 
 @app.route('/create/', methods=('GET', 'POST'))
 def create():
@@ -69,6 +67,7 @@ def create():
             # Convert plantLocation to an int
             plantLocation = int(plantLocation)
 
+
             counter = 0
             isDuplicate = False
 
@@ -81,20 +80,24 @@ def create():
                     # Read the file line by line, finding if there is a duplicate entry at a location
                     Lines = f.readlines()
                     for line in Lines:
+                        print('Reading file...')
                         # split the file by the commas
                         line = line.split(',')
-                        tempTitle = line[0]
-                        tempWater_amount = line[1]
                         tempLocation = line[2]
                         tempLocation = int(tempLocation)
-                        
+
+                        print("User inputted location: ", plantLocation)
+                        print("Location of read duplicate: ", tempLocation)
+
                         if tempLocation == plantLocation:
-                            print('Duplicate plant location at line: ', counter)
+                            print('Duplicate plant location at line index: ', counter)
+                            print('Line index: ', counter)
                             isDuplicate = True
                             break
                         else:
+                            print('Add one to counter: ', counter)
                             counter += 1
-                            continue
+                    #counter+=1
                     print('Closing file')
                     f.close()
 
@@ -102,14 +105,14 @@ def create():
                 if isDuplicate == False:
                     with open('OUTPUT.csv', 'a') as f:
                         f.write(plantCSV)
-                        flash(f'No duplicates, added {plantCSV}')
+                        flash(f'No duplicates, added {plantCSV} at index {counter}')
                     f.close()
                 else:
-                    flash(f'Duplicate plant location at line: {counter}, replacing with {plantCSV}')
+                    flash(f'Duplicate plant location at document index: {counter}, replacing with {plantCSV}')
                     with open('OUTPUT.csv', 'r') as f:
                         Lines = f.readlines()
                         print('counter', counter)
-                        counter +=1
+                        #counter +=1
                         Lines[counter] = plantCSV
                         counter = 0
                         f.close()
