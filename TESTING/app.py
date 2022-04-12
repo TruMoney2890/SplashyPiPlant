@@ -19,24 +19,31 @@ messages = [{'title': 'Spring Cactus',
             ]
 
 def read_data():
+    messageList = []
+
     with open('OUTPUT.csv', 'r') as f:
         Lines = f.readlines()
         for line in Lines:
-            # split the file by the commas
-            line = line.split(',')
-            title = line[0]
-            amount = line[1]
-            location = line[2]
-            tempPlantInfo = f"WATERED: {amount} mL EVERY: 3 Hours LOCATION: {location}"
-            tempMessage = {'title': title, 'content': tempPlantInfo}
-            messages.append(tempMessage)
+            # Filter out lines that are blank
 
+            if line != '\n':
+                print("LINE", line)
+                # split the file by the commas
+                line = line.split(',')
+                title = line[0]
+                amount = line[1]
+                location = line[2]
+                tempPlantInfo = f"WATERED: {amount} mL EVERY: 3 Hours LOCATION: {location}"
+                tempMessage = {'title': title, 'content': tempPlantInfo}
+                messageList.append(tempMessage)
+            # else, do nothing
     f.close()
     return 0
 
 @app.route('/')
 def index():
-    
+    #messageList = read_data()
+    #print(messageList)
     return render_template('index.html', messages=messages)
 
 def main():
@@ -66,60 +73,17 @@ def create():
             
             # Convert plantLocation to an int
             plantLocation = int(plantLocation)
-
-
-            counter = 0
-            isDuplicate = False
+            print('plantLocation: ', plantLocation)
 
             with open('OUTPUT.csv', 'r') as f:
-                # Check if file is empty, then exit the loop
-                if f.readline() == '':
-                    print('File is empty')
-                    f.close()
-                else:
-                    # Read the file line by line, finding if there is a duplicate entry at a location
-                    Lines = f.readlines()
-                    for line in Lines:
-                        print('Reading file...')
-                        # split the file by the commas
-                        line = line.split(',')
-                        tempLocation = line[2]
-                        tempLocation = int(tempLocation)
-
-                        print("User inputted location: ", plantLocation)
-                        print("Location of read duplicate: ", tempLocation)
-
-                        if tempLocation == plantLocation:
-                            print('Duplicate plant location at line index: ', counter)
-                            print('Line index: ', counter)
-                            isDuplicate = True
-                            break
-                        else:
-                            print('Add one to counter: ', counter)
-                            counter += 1
-                    #counter+=1
-                    print('Closing file')
-                    f.close()
-
-                print('Counter: ', counter)
-                if isDuplicate == False:
-                    with open('OUTPUT.csv', 'a') as f:
-                        f.write(plantCSV)
-                        flash(f'No duplicates, added {plantCSV} at index {counter}')
-                    f.close()
-                else:
-                    flash(f'Duplicate plant location at document index: {counter}, replacing with {plantCSV}')
-                    with open('OUTPUT.csv', 'r') as f:
-                        Lines = f.readlines()
-                        print('counter', counter)
-                        #counter +=1
-                        Lines[counter] = plantCSV
-                        counter = 0
-                        f.close()
-                    flash(f'Wrote {plantCSV} to file')
-                    with open('OUTPUT.csv', 'w') as f:
-                        f.writelines(Lines)
-                        f.close()
+                Lines = f.readlines()
+                plantLocation -= 1
+                Lines[plantLocation] = plantCSV
+                f.close()
+            
+            with open('OUTPUT.csv', 'w') as f:
+                f.writelines(Lines)
+                f.close()
                             
             return redirect(url_for('index'))
     return render_template('create.html')  
