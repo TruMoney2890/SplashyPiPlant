@@ -2,6 +2,7 @@
 ## ADD REMOVE FUNCTION 
 ## ADD WARNING IF NOT 22ML INCREMENT
 ## TWEAK READ DATA FUNCTION TO ONLY RENDER ONCE AND NOT EVERYTIME
+## OR WE TAKE IN DATA AND DO INT DIVISION BY 22 AKA SECONDS IT TURNS ON
 
 import json
 from flask import Flask, render_template, request, url_for, flash, redirect
@@ -64,26 +65,59 @@ def create():
             flash('Plant location is required!')
         else:
             messages.append({'title': title, 'content': plantInfo})
+            
+            # Convert plantLocation to an int
+            plantLocation = int(plantLocation)
 
-            with open('OUTPUT.csv', 'a') as f:
-                # Lines = f.readlines()
-                # for line in Lines:
-                #     # split the file by the commas
-                #     line = line.split(',')
-                #     title = line[0]
-                #     amount = line[1]
-                #     location = line[2]
-                #     if location == plantLocation:
-                #         # overwrite that line
-                #         f.write(plantCSV)
-                #         f.close()
+            counter = 0
+            isDuplicate = False
 
-                f.write(str(plantCSV))
-            # Close the file
-            f.close()
+            with open('OUTPUT.csv', 'r') as f:
+                # Check if file is empty, then exit the loop
+                if f.readline() == '':
+                    print('File is empty')
+                    f.close()
+                else:
+                    # Read the file line by line, finding if there is a duplicate entry at a location
+                    Lines = f.readlines()
+                    for line in Lines:
+                        # split the file by the commas
+                        line = line.split(',')
+                        tempTitle = line[0]
+                        tempWater_amount = line[1]
+                        tempLocation = line[2]
+                        tempLocation = int(tempLocation)
+                        
+                        if tempLocation == plantLocation:
+                            print('Duplicate plant location at line: ', counter)
+                            isDuplicate = True
+                            break
+                        else:
+                            counter += 1
+                            continue
+                    print('Closing file')
+                    f.close()
 
-            flash(f'Added {title}: {plantInfo}')
-
+                print('Counter: ', counter)
+                if isDuplicate == False:
+                    with open('OUTPUT.csv', 'a') as f:
+                        f.write(plantCSV)
+                        flash(f'No duplicates, added {plantCSV}')
+                    f.close()
+                else:
+                    flash(f'Duplicate plant location at line: {counter}, replacing with {plantCSV}')
+                    with open('OUTPUT.csv', 'r') as f:
+                        Lines = f.readlines()
+                        print('counter', counter)
+                        counter +=1
+                        Lines[counter] = plantCSV
+                        counter = 0
+                        f.close()
+                    flash(f'Wrote {plantCSV} to file')
+                    with open('OUTPUT.csv', 'w') as f:
+                        f.writelines(Lines)
+                        f.close()
+                            
             return redirect(url_for('index'))
     return render_template('create.html')  
 
