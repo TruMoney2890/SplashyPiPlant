@@ -24,9 +24,9 @@ def read_data():
     with open('OUTPUT.csv', 'r') as f:
         Lines = f.readlines()
         for line in Lines:
-            # Filter out lines that are blank
-
-            if line != '\n':
+            # Take out all of the new lines
+            line = line.strip()
+            if line != '':
                 print("LINE", line)
                 # split the file by the commas
                 line = line.split(',')
@@ -38,13 +38,13 @@ def read_data():
                 messageList.append(tempMessage)
             # else, do nothing
     f.close()
-    return 0
+    return messageList
 
 @app.route('/')
 def index():
-    #messageList = read_data()
-    #print(messageList)
-    return render_template('index.html', messages=messages)
+    messageList = read_data()
+    print(messageList)
+    return render_template('index.html', messages=messageList)
 
 def main():
     return render_template('index.html')
