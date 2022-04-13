@@ -1,4 +1,3 @@
-## ADD ABILITY TO OVERWRITE A LINE IF THE PLANT LOCATION IS DUPLICATE
 ## ADD REMOVE FUNCTION 
 ## ADD WARNING IF NOT 22ML INCREMENT
 ## TWEAK READ DATA FUNCTION TO ONLY RENDER ONCE AND NOT EVERYTIME
@@ -68,6 +67,8 @@ def create():
             flash('Water amount is required!')
         elif not plantLocation:
             flash('Plant location is required!')
+        elif int(water_amount) % 22 != 0:
+            flash('Water amount must be a multiple of 22 mL!')
         else:
             messages.append({'title': title, 'content': plantInfo})
             
