@@ -88,7 +88,10 @@ def create():
                 f.writelines(Lines)
                 f.close()
             
+            # Old file path
             original = r'/home/cpeters/Spring_2022/CEG_4981/SplashyPiPlant/TESTING/OUTPUT.csv'
+
+            # New file path
             target = r'/home/cpeters/TEST/new_csv.csv'
 
             shutil.copyfile(original, target)
