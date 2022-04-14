@@ -6,6 +6,8 @@
 import json
 from flask import Flask, render_template, request, url_for, flash, redirect
 import urllib
+import shutil
+
 
 app = Flask(__name__)
 
@@ -85,6 +87,11 @@ def create():
             with open('OUTPUT.csv', 'w') as f:
                 f.writelines(Lines)
                 f.close()
+            
+            original = r'/home/cpeters/Spring_2022/CEG_4981/SplashyPiPlant/TESTING/OUTPUT.csv'
+            target = r'/home/cpeters/TEST/new_csv.csv'
+
+            shutil.copyfile(original, target)
                             
             return redirect(url_for('index'))
     return render_template('create.html')  
